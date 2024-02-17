@@ -1,0 +1,37 @@
+type Product {
+  id: ID!
+  name: String!
+  amount: Int
+  isHazardous: Boolean!
+}
+
+enum ProductAction {
+  IMPORT
+  EXPORT
+}
+
+input CreateProductInput {
+  name: String!
+  amount: Int
+  isHazardous: Boolean!
+}
+
+input movementProductInput {
+  warehouseId: ID!
+  productId: ID!
+  action: ProductAction!
+  amount: Int!
+  date: String!
+}
+
+type Query {
+  products: [Product]
+  product(id: ID!): Product
+}
+
+type Mutation {
+  createProduct(createProductInput: CreateProductInput!): Product!
+  movementProduct(
+    movementProductInput: movementProductInput!
+  ): WarehouseHistory!
+}

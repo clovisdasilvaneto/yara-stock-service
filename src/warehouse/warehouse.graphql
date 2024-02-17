@@ -1,0 +1,42 @@
+type WarehouseHistory {
+  id: ID
+  product: Product!
+  warehouse: Warehouse!
+  action: ProductAction!
+  amount: Int!
+  date: String!
+}
+
+type WarehouseProducts {
+  id: Int!
+  product: Product
+  amount: Int
+}
+
+type Warehouse {
+  id: ID
+  name: String
+  maxAmount: Int
+  warehouseHistory: [WarehouseHistory]
+  warehouseProduct: [WarehouseProducts]
+}
+
+input CreateWarehouseInput {
+  name: String
+  maxAmount: Int
+}
+
+input UpdateWarehouseInput {
+  id: ID!
+}
+
+type Query {
+  warehouses: [Warehouse]
+  warehouse(id: ID!): Warehouse
+}
+
+type Mutation {
+  createWarehouse(createWarehouseInput: CreateWarehouseInput!): Warehouse!
+  updateWarehouse(updateWarehouseInput: UpdateWarehouseInput!): Warehouse!
+  removeWarehouse(id: ID!): Warehouse
+}
