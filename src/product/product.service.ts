@@ -32,7 +32,9 @@ export class ProductService {
   }
 
   async findAll() {
-    return await this.productRepository.find();
+    return await this.productRepository.find({
+      order: { id: { direction: 'DESC' } },
+    });
   }
 
   async findOne(id: number) {

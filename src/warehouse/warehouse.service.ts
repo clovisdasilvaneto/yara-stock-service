@@ -19,7 +19,27 @@ export class WarehouseService {
   }
 
   async findAll() {
-    return await this.warehouseRepository.find();
+    const data = await this.warehouseRepository.find({
+      relations: [
+        'warehouseHistory',
+        'warehouseHistory.product',
+        'warehouseProduct',
+        'warehouseProduct.product',
+      ],
+    });
+
+    const warehouses = data.map((warehouse) => ({
+      ...warehouse,
+      hasHazardous: warehouse.warehouseProduct.some(
+        (current) => current.product.isHazardous,
+      ),
+      capacity: warehouse.warehouseProduct.reduce(
+        (acc, current) => acc + current.amount,
+        0,
+      ),
+    }));
+
+    return warehouses;
   }
 
   async findOne(id: number) {

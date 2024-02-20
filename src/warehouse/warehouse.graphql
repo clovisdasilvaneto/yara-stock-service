@@ -17,8 +17,10 @@ type Warehouse {
   id: ID
   name: String
   maxAmount: Int
+  hasHazardous: Boolean
   warehouseHistory: [WarehouseHistory]
   warehouseProduct: [WarehouseProducts]
+  capacity: Int
 }
 
 input CreateWarehouseInput {
